@@ -12,9 +12,6 @@ interface School extends RowDataPacket{
     latitude: number
     longitude: number
 }
-interface SchoolWithDistance extends School {
-    distance: number
-}
 
 router.post("/addSchool", async (req, res) => {
     const {name, address, latitude, longitude} = req.body
@@ -53,7 +50,7 @@ router.post("/addSchool", async (req, res) => {
         const [result] = await pool.query<ResultSetHeader>(
             `
                 INSERT INTO schools (name, address,latitude, longitude)
-                VALUES ($1, $2, $3, $4)
+                VALUES (?, ?, ?, ?)
             `, [name.trim(), address.trim(), lat, lon]
         )
         
@@ -63,9 +60,40 @@ router.post("/addSchool", async (req, res) => {
         })
         
     }catch(error){
-        console.error("Error adding school:", error)
+        console.error("Error adding school:", (error as Error).message)
         res.status(500).json({error:"Internal server error"})
     }
 })
 
-// implement GET end-point
+router.get("/listSchools", async (req, res) => {
+    const {latitude, longitude} = req.query
+
+    if(!longitude || isNaN(Number(longitude))) {
+        res.status(400).json({ error: "latitude query param is required and must be a number"})
+        return
+    }
+    if(!latitude || isNaN(Number(latitude))) {
+        res.status(400).json({ error: "longitude query param is required and must be a number"})
+        return
+    }
+
+    const userLat = Number(latitude)
+    const userLon = Number(longitude)
+
+    try {
+        const [schools] = await pool.query<[School]>(`SELECT * FROM schools`)
+
+        const sorted = schools.map((school) => ({
+            ...school,
+            distance: getDistance(userLat,userLon, school.latitude, school.longitude)
+        })).sort((a,b)=>(a.distance - b.distance))
+
+        res.status(200).json({schools: sorted})
+
+    } catch (err) {
+        console.error("Error fetching schools:", (err as Error).message)
+        return res.status(500).json({error: "Internal Server Error"})
+    }
+})
+
+export default router
