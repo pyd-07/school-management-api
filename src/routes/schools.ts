@@ -1,7 +1,7 @@
 import { Router } from "express"
 import pool from "../config/db.js"
 import getDistance from "../utils/getDistance.js"
-import type { RowDataPacket, ResultSetHeader } from "mysql2"
+import type { RowDataPacket} from "mysql2"
 
 const router = Router()
 
@@ -47,7 +47,7 @@ router.post("/addSchool", async (req, res) => {
     }
 
     try {
-        const [result] = await pool.query<ResultSetHeader>(
+        const [result] = await pool.query(
             `
                 INSERT INTO schools (name, address,latitude, longitude)
                 VALUES (?, ?, ?, ?)
@@ -56,7 +56,6 @@ router.post("/addSchool", async (req, res) => {
         
         res.status(201).json({ 
             message: "School added successfully",
-            SchoolID: result.insertId
         })
         
     }catch(error){
