@@ -1,6 +1,6 @@
 # School Management API
 
-[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/49139819-48d9674f-a4ae-4de5-a7a8-05d2f11979dc?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D49139819-48d9674f-a4ae-4de5-a7a8-05d2f11979dc%26entityType%3Dcollection%26workspaceId%3D778a79e8-ee72-4f16-87b9-1236e243748e)
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/49139819-48d9674f-a4ae-4de5-a7a8-05d2f11979dc?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D49139819-48d9674f-a4ae-4de5-a7a8-05d2f11979dc%26entityType%3Dcollection%26workspaceId%3D74ea9d13-975f-4e0c-8d17-9c193d1d1959)
 
 
 A REST API built with Node.js, Express, TypeScript, and MySQL to manage school data. Supports adding schools and retrieving them sorted by proximity to a given location.
