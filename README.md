@@ -28,7 +28,7 @@ school-management-api/
 │   ├── routes/
 │   │   └── schools.ts     # API route handlers
 │   ├── utils/
-│   │   └── distance.ts    # Haversine distance formula
+│   │   └── getDistance.ts    # Haversine distance formula
 │   └── index.ts           # Express app entry point
 ├── tsconfig.json
 └── package.json
